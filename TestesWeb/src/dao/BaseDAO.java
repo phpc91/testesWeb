@@ -8,7 +8,7 @@ public abstract class BaseDAO {
 	
 	//TODO passar admin e senha para properties? cripto?
 	private static String user="admin", passwd="admin123",
-			endpoint="tai-db.cyki8d0w5wwv.sa-east-1.rds.amazonaws.com/database";
+			endpoint="tai-db.cyki8d0w5wwv.sa-east-1.rds.amazonaws.com/testesweb";
 	
 	public BaseDAO() {
 		try{
@@ -23,4 +23,6 @@ public abstract class BaseDAO {
 	}
 	
 	//TODO implementar cache aqui -- try cache, else db
+	//serializar classes lidas, escrever no cache.
+	//buscar no cache, deserializar 
 }
