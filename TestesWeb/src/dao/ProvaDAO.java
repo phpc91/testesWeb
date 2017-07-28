@@ -21,15 +21,15 @@ public class ProvaDAO extends BaseDAO implements InterfaceProvaDAO {
 		try {
 			Connection conn = createConnection();
 			Statement statement = conn.createStatement();
-			ResultSet resultSet = statement.executeQuery("");
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM Prova WHERE id_prova LIKE '"+id+"%'");
 			resultSet.next();
 			
 			String[] questoes = new String[10];
 			Boolean[] respostas = new Boolean[10];
 			
-			for(int i=1; i<=10; i++) {
-				questoes[i] = resultSet.getString("questao"+i);
-				respostas[i] = resultSet.getBoolean("resposta"+i);
+			for(int i=0; i<10; i++) {
+				questoes[i] = resultSet.getString("questao"+(i+1));
+				respostas[i] = resultSet.getBoolean("resposta"+(i+1));
 			}
 			
 			prova.setId(resultSet.getInt("id_prova"));
@@ -42,5 +42,7 @@ public class ProvaDAO extends BaseDAO implements InterfaceProvaDAO {
 		}
 		return prova;
 	}
-
+	
+	//TODO add UpdateQuestaoDaProva(int idProva, int numeroQuestao, String questao)
+	//"UPDATE Prova SET 'questao'"+numeroQuestao+"="+questao+" WHERE id_prova = "+idProva
 }
