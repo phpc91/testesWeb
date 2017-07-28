@@ -14,6 +14,16 @@
 <title>TestesWeb</title>
 </head>
 <body>
-	<h1>Home</h1>
+	<div id="form" style="text-align: center">
+		<h1>Home</h1>
+		<form method="post" action="${pageContext.request.contextPath}/busca">
+			<div
+				class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+				<input class="mdl-textfield__input" type="text" id="nome" name="nome"> <label
+					class="mdl-textfield__label" for="nome">Nome Completo</label>
+			</div><br>
+			<input type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised" value="Buscar">
+		</form>
+	</div>
 </body>
 </html>
