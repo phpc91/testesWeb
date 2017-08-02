@@ -22,6 +22,8 @@ public class TestFuncionarioDAO {
 		assertTrue("Erro no cargo_id", func.get(0).getCargo().getId() == 1);
 		assertTrue("Erro no id_funcionário", func.get(0).getId() == 1);
 		assertTrue("Erro no tipo de prova", func.get(0).getCargo().getProva().getId() == 1);
+		
+		assertTrue("Nulo", funcionarioDAO.getFuncionarioPorId(351)==null); //id não existente
 	}
 
 }

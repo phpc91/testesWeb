@@ -19,7 +19,7 @@ public class FuncionarioDAO extends BaseDAO implements InterfaceFuncionarioDAO {
 	
 	public ArrayList<Funcionario> getFuncionariosPorNome(String nome) {
 		ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
-		//TODO e se a busca resultar em 2 funcionarios? while(resultSet.hasNext()) { arrayFuncionarios.add(funcionario) } 
+		//TODO e se resultar nulo? preparar pagina de erro 
 		try {
 			Connection conn = createConnection();
 			Statement statement = conn.createStatement();
@@ -38,7 +38,9 @@ public class FuncionarioDAO extends BaseDAO implements InterfaceFuncionarioDAO {
 			
 			conn.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
+			System.err.println("Funcionario nao encontrado");
+			return null;
 		}
 		
 		return funcionarios;
@@ -59,8 +61,10 @@ public class FuncionarioDAO extends BaseDAO implements InterfaceFuncionarioDAO {
 			
 			conn.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//			e.printStackTrace();
+			System.err.println("Funcionario nao encontrado");
+			return null;
+		} 
 		
 		return funcionario;
 	}
