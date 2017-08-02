@@ -19,7 +19,8 @@ public class ProvaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private static final FuncionarioDAO funcionarioDAO = FuncionarioDAO.getInstance();
-       
+	private Prova prova;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -32,25 +33,31 @@ public class ProvaController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO implementar corretamente
-		Funcionario funcionario = funcionarioDAO.getFuncionarioPorId(Integer.parseInt(request.getParameter("id_funcionario")));
 		
-		Prova prova = funcionario.getCargo().getProva();
-		String[] questoes = prova.getQuestoes();
-		Boolean[] respostas = prova.getRespostas();
-		
-		for(int i=0; i<10; i++) {
-			request.setAttribute("questao"+(i+1), questoes[i]);
-			request.setAttribute("resposta"+(i+1), respostas[i]);
-		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		//TODO corrigir prova
+//		Boolean[] respostas = prova.getRespostas();
+//		
+//		for(int i=0; i<respostas.length; i++) {
+//			
+//		}
+		
+		int idFuncionario = Integer.parseInt(request.getParameter("id_funcionario"));
+		Funcionario funcionario = funcionarioDAO.getFuncionarioPorId(idFuncionario);
+		
+		prova = funcionario.getCargo().getProva();
+		String[] questoes = prova.getQuestoes();
+		int idProva = prova.getId();
+		
+		request.setAttribute("questoes", questoes);
+		request.setAttribute("id_prova", idProva);
+		
+		request.getRequestDispatcher("/prova/realizar-prova.jsp").forward(request, response);
 	}
 
 }
