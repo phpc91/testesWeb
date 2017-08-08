@@ -27,5 +27,6 @@
 			<input type="submit" class="bold mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised" value="Buscar" id="buscar">
 		</form>
 	</div>
+	<!-- TODO adicionar campos para acesso admin -->
 </body>
 </html>
