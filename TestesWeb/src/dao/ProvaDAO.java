@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -23,12 +24,13 @@ public class ProvaDAO extends BaseDAO implements InterfaceProvaDAO {
 			Connection conn = createConnection();
 			Statement statement = conn.createStatement();
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM Prova WHERE id_prova = "+id+" ");
+			int numeroDeQuestoes = getTamanhoDaProva(resultSet);
 			resultSet.next();
 			
-			String[] questoes = new String[10];
-			Boolean[] respostas = new Boolean[10];
+			String[] questoes = new String[numeroDeQuestoes];
+			Boolean[] respostas = new Boolean[numeroDeQuestoes];
 			
-			for(int i=0; i<10; i++) { //TODO vai dar merda se numero de questoes != 10
+			for(int i=0; i<numeroDeQuestoes; i++) {
 				questoes[i] = resultSet.getString("questao"+(i+1));
 				respostas[i] = resultSet.getBoolean("resposta"+(i+1));
 			}
@@ -46,6 +48,26 @@ public class ProvaDAO extends BaseDAO implements InterfaceProvaDAO {
 		return prova;
 	}
 	
-	//TODO add UpdateQuestaoDaProva(int idProva, int numeroQuestao, String questao)
+	//TODO add UpdateQuestaoDaProva(int idProva, int numeroQuestao, String enunciado)
 	//"UPDATE Prova SET 'questao'"+numeroQuestao+"="+questao+" WHERE id_prova = "+idProva
+	//TODO add adicionarQuestaoAProva(int idProva, String enunciado)
+	//"UPDATE Prova ..."
+	
+	private int getTamanhoDaProva(ResultSet resultSet) {
+		int tamanhoProva = 0;
+		
+		try {
+			ResultSetMetaData metadata = resultSet.getMetaData();
+			for(int i=1; i<= metadata.getColumnCount(); i++) {
+				if(metadata.getColumnName(i).contains("questao")) {
+					tamanhoProva++;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.err.println("\n\nErro na obtenção do numero de questoes de prova");
+		}
+		
+		return tamanhoProva;
+	}
 }
