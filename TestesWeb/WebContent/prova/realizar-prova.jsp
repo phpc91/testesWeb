@@ -37,7 +37,7 @@ h5{
 <% Integer idProva = (Integer) request.getAttribute("id_prova"); %>
 <body>
 	<h1>Prova Tipo <%= idProva %></h1>
-	<form id="questionario" action="${pageContext.request.contextPath}/" method="post">
+	<form id="questionario" action="${pageContext.request.contextPath}/correcao" method="post">
 		<div id="prova" class="mdl-grid">
 			<% String[] questoes = (String[]) request.getAttribute("questoes"); %>
 			<% for(int i=0; i < questoes.length; i++) { %>
