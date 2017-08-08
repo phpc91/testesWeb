@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="entidade.Funcionario" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -39,7 +38,7 @@
 </head>
 <body>
 	<div id="resultado" class="">
-		<form id="escolha" method="post" action="${pageContext.request.contextPath}/prova" style="text-align:center">
+		<form id="escolha" method="post" action="${pageContext.request.contextPath}/treinamentos" style="text-align:center">
 			<div class="wrapper">
 				<ul class="list-control mdl-list">
 					<%	String[] nomesFunc = (String[]) request.getAttribute("nomes_funcionarios");	%>
@@ -61,7 +60,7 @@
 					<%	} %>
 				</ul>
 			</div>
-			<input type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised" value="Iniciar Teste">
+			<input type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised" value="Próximo">
 		</form>
 	</div>
 </body>

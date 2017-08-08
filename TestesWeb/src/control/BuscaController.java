@@ -48,7 +48,7 @@ public class BuscaController extends HttpServlet {
 			request.setAttribute("ids_funcionarios", idsFuncionarios);
 			request.setAttribute("cargos_funcionarios", cargosFuncionarios);
 			
-			request.getRequestDispatcher("/resultado.jsp").forward(request, response);
+			request.getRequestDispatcher("/lista-funcionarios.jsp").forward(request, response);
 		} else {
 			request.getRequestDispatcher("/erro/nao-encontrado.jsp").forward(request,response);
 		}
@@ -58,7 +58,8 @@ public class BuscaController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO implementar?
+		// TODO avaliar se deixa assim ou muda
+		System.out.println("passou no BuscaController.doPost");
 		doGet(request, response);
 	}
 
