@@ -16,18 +16,19 @@ public class ProvaDAO extends BaseDAO implements InterfaceProvaDAO {
 	}
 	
 	public Prova getProvaPorId(int id) {
+		System.out.println("Buscando prova por id="+id);
 		Prova prova = new Prova();
 		
 		try {
 			Connection conn = createConnection();
 			Statement statement = conn.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM Prova WHERE id_prova LIKE '"+id+"%'");
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM Prova WHERE id_prova = "+id+" ");
 			resultSet.next();
 			
 			String[] questoes = new String[10];
 			Boolean[] respostas = new Boolean[10];
 			
-			for(int i=0; i<10; i++) {
+			for(int i=0; i<10; i++) { //TODO vai dar merda se numero de questoes != 10
 				questoes[i] = resultSet.getString("questao"+(i+1));
 				respostas[i] = resultSet.getBoolean("resposta"+(i+1));
 			}
@@ -38,8 +39,10 @@ public class ProvaDAO extends BaseDAO implements InterfaceProvaDAO {
 			
 			conn.close();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.err.println("Prova não encontrada");
+			return null;
 		}
+		System.out.println("Prova encontrada");
 		return prova;
 	}
 	

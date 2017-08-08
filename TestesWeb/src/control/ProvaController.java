@@ -1,15 +1,18 @@
 package control;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.FuncionarioDAO;
-import entidade.Funcionario;
+import dao.TreinamentoDAO;
 import entidade.Prova;
+import entidade.Treinamento;
 
 /**
  * Servlet implementation class ProvaController
@@ -18,7 +21,7 @@ import entidade.Prova;
 public class ProvaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private static final FuncionarioDAO funcionarioDAO = FuncionarioDAO.getInstance();
+	private static final TreinamentoDAO treinamentoDAO = TreinamentoDAO.getInstance();
 	private Prova prova;
 	
     /**
@@ -26,7 +29,6 @@ public class ProvaController extends HttpServlet {
      */
     public ProvaController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
@@ -40,23 +42,22 @@ public class ProvaController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO corrigir prova
-//		Boolean[] respostas = prova.getRespostas();
-//		
-//		for(int i=0; i<respostas.length; i++) {
-//			
-//		}
 		
-		int idFuncionario = Integer.parseInt(request.getParameter("id_funcionario"));
-		Funcionario funcionario = funcionarioDAO.getFuncionarioPorId(idFuncionario);
+		int idTreinamento = Integer.parseInt(request.getParameter("id_treinamento"));
+		Treinamento treinamento = treinamentoDAO.getTreinamentoPorId(idTreinamento);
+		ArrayList<Prova> provas = treinamento.getProvas();
+		int numeroProvas = provas.size();
 		
-		prova = funcionario.getCargo().getProva();
+		Random r = new Random(); 
+		int idProva = r.nextInt(numeroProvas); //gera indice para pegar prova aleatoriamente
+		
+		prova = provas.get(idProva);
 		String[] questoes = prova.getQuestoes();
-		int idProva = prova.getId();
 		
 		request.setAttribute("questoes", questoes);
 		request.setAttribute("id_prova", idProva);
 		
+//		request.getRequestDispatcher("/prova/lista-provas.jsp").forward(request, response); -- TODO descomentar se desejar seleção de prova
 		request.getRequestDispatcher("/prova/realizar-prova.jsp").forward(request, response);
 	}
 
