@@ -18,13 +18,14 @@ public class FuncionarioDAO extends BaseDAO implements InterfaceFuncionarioDAO {
 	}
 	
 	public ArrayList<Funcionario> getFuncionariosPorNome(String nome) {
+		System.out.println("Buscando funcionario por nome="+nome);
 		ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
-		//TODO e se resultar nulo? preparar pagina de erro 
 		try {
 			Connection conn = createConnection();
 			Statement statement = conn.createStatement();
 			
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcionario WHERE nome_funcionario LIKE '%"+nome+"%'");
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcionario WHERE nome_funcionario LIKE '%"+nome+"%'"
+					+ " ORDER BY nome_funcionario ASC");
 			
 			while(resultSet.next()) {
 				Funcionario funcionario = new Funcionario();
@@ -38,21 +39,21 @@ public class FuncionarioDAO extends BaseDAO implements InterfaceFuncionarioDAO {
 			
 			conn.close();
 		} catch (SQLException e) {
-//			e.printStackTrace();
 			System.err.println("Funcionario nao encontrado");
 			return null;
 		}
-		
+		System.out.println("Funcionario encontrado");
 		return funcionarios;
 	}
 	
 	public Funcionario getFuncionarioPorId(int id) {
+		System.out.println("Buscando funcionario por id="+id);
 		Funcionario funcionario = new Funcionario();
 		
 		try {
 			Connection conn = createConnection();
 			Statement statement = conn.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcionario WHERE id_funcionario LIKE '"+id+"%'");
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcionario WHERE id_funcionario = "+id+" ");
 			resultSet.next();
 			
 			funcionario.setId(resultSet.getInt("id_funcionario"));
@@ -61,11 +62,10 @@ public class FuncionarioDAO extends BaseDAO implements InterfaceFuncionarioDAO {
 			
 			conn.close();
 		} catch (SQLException e) {
-//			e.printStackTrace();
 			System.err.println("Funcionario nao encontrado");
 			return null;
 		} 
-		
+		System.out.println("Funcionario encontrado");
 		return funcionario;
 	}
 
