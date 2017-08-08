@@ -2,7 +2,6 @@ package control;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.ProvaDAO;
-import entidade.Prova;
 
 /**
  * Servlet implementation class CorrecaoController
@@ -31,18 +29,7 @@ public class CorrecaoController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		Enumeration<String> parameterNames = request.getParameterNames();
 		PrintWriter p = response.getWriter();
-//		while(parameterNames.hasMoreElements()) {
-//			String nome = parameterNames.nextElement();
-//			p.println(nome);
-//			
-//			String[] valores = request.getParameterValues(nome);
-//			for(int i =0; i<valores.length; i++) {
-//				String valor = valores[i];
-//				p.println("\t"+valor+"\n");
-//			}
-//		}
 		
 		Boolean[] respostas = new Boolean[10];
 		int idProva = Integer.parseInt(request.getParameter("prova_id"));
