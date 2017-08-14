@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Enumeration" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -39,6 +40,12 @@
 <body>
 	<div id="resultado" class="">
 		<form id="escolha" method="post" action="${pageContext.request.contextPath}/treinamentos" style="text-align:center">
+			<% //logica para obter todos os funcionarios serializados e passá-los ao próximo servlet 
+			for (int i=0; i<(int)request.getAttribute("numero_funcionarios"); i++) {
+				String nome = "obj_funcionario"+(i+1);
+				String obj = (String) request.getAttribute(nome); %>
+				<input type="hidden" name="<%= nome %>" value='<%= obj %>'>
+			<% } %>
 			<div class="wrapper">
 				<ul class="list-control mdl-list">
 					<%	String[] nomesFunc = (String[]) request.getAttribute("nomes_funcionarios");	%>
