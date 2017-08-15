@@ -48,23 +48,23 @@
 			<% } %>
 			<div class="wrapper">
 				<ul class="list-control mdl-list">
-					<%	String[] nomesFunc = (String[]) request.getAttribute("nomes_funcionarios");	%>
-					<%	Integer[] idsFunc = (Integer[]) request.getAttribute("ids_funcionarios"); %>
-					<%	String[] cargosFunc = (String[]) request.getAttribute("cargos_funcionarios"); %>
-					<%	for (int i = 0; i < nomesFunc.length; i++) { %>
-						<li class="mdl-list__item mdl-list__item--two-line">
-							<span class="mdl-list__item-primary-content"> 
-								<i class="material-icons  mdl-list__item-avatar">person</i>
-								<span><%= nomesFunc[i] %></span>
-								<span class="mdl-list__item-sub-title"><%= cargosFunc[i] %></span>
-							</span> 
-							<span class="mdl-list__item-secondary-action"> 
-								<label class="list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect" for="func<%= i %>"> 
-									<input type="radio"	id="func<%= i %>" class="mdl-radio__button" name="id_funcionario" value="<%= idsFunc[i] %>">
-								</label>
-							</span>
-						</li>
-					<%	} %>
+				<%	String[] nomesFunc = (String[]) request.getAttribute("nomes_funcionarios");	%>
+				<%	Integer[] idsFunc = (Integer[]) request.getAttribute("ids_funcionarios"); %>
+				<%	String[] cargosFunc = (String[]) request.getAttribute("cargos_funcionarios"); %>
+				<%	for (int i = 0; i < nomesFunc.length; i++) { %>
+					<li class="mdl-list__item mdl-list__item--two-line">
+						<span class="mdl-list__item-primary-content"> 
+							<i class="material-icons  mdl-list__item-avatar">person</i>
+							<span><%= nomesFunc[i] %></span>
+							<span class="mdl-list__item-sub-title"><%= cargosFunc[i] %></span>
+						</span> 
+						<span class="mdl-list__item-secondary-action"> 
+							<label class="list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect" for="func<%= i %>"> 
+								<input type="radio"	id="func<%= i %>" class="mdl-radio__button" name="id_funcionario" value="<%= idsFunc[i] %>">
+							</label>
+						</span>
+					</li>
+				<%	} %>
 				</ul>
 			</div>
 			<input type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised" value="Próximo">

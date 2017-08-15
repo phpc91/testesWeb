@@ -2,6 +2,7 @@ package control;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.FuncionarioDAO;
+import com.google.gson.Gson;
+
 import entidade.Funcionario;
 import entidade.Treinamento;
 
@@ -19,7 +21,6 @@ import entidade.Treinamento;
 @WebServlet("/treinamentos")
 public class TreinamentoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final FuncionarioDAO funcionarioDAO = FuncionarioDAO.getInstance();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -32,9 +33,30 @@ public class TreinamentoController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Enumeration<String> parametros = request.getParameterNames();
+		int numeroFuncionarios = 0;
+		while(parametros.hasMoreElements()) {
+			if(parametros.nextElement().contains("obj_funcionario")){
+				numeroFuncionarios++;
+			}
+		}
+		Gson gson = new Gson();
+		Funcionario funcionario = new Funcionario();
 		
 		int idFuncionario = Integer.parseInt(request.getParameter("id_funcionario"));
-		Funcionario funcionario = funcionarioDAO.getFuncionarioPorId(idFuncionario);
+		for(int i=0; i<numeroFuncionarios; i++){
+			String objFuncionario = (String)request.getParameter("obj_funcionario"+(i+1));
+			funcionario = gson.fromJson(objFuncionario, Funcionario.class); 
+			if(idFuncionario == funcionario.getId()){
+				break;
+			}
+			
+			//se está no último item da lista e os ids ainda não batem => erro
+			if(i == numeroFuncionarios-1 && idFuncionario != funcionario.getId()){ 
+				request.getRequestDispatcher("/erro/erro.jsp").forward(request, response);
+			}
+		}
+		
 		ArrayList<Treinamento> treinamentos = funcionario.getCargo().getTreinamentos();
 		int numeroTreinamentos = treinamentos.size();
 		Integer[] idsTreinamentos = new Integer[numeroTreinamentos];
@@ -47,7 +69,9 @@ public class TreinamentoController extends HttpServlet {
 		}
 		request.setAttribute("ids_treinamentos", idsTreinamentos);
 		request.setAttribute("nomes_treinamentos", nomesTreinamentos);
-		
+		request.setAttribute("obj_funcionario", gson.toJson(funcionario));
+
+//		request.getRequestDispatcher("/treinamentos/teste.jsp").forward(request, response);
 		request.getRequestDispatcher("/treinamentos/lista-treinamentos.jsp").forward(request, response);
 	}
 

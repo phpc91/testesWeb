@@ -37,7 +37,7 @@ public class ProvaDAO extends BaseDAO implements InterfaceProvaDAO {
 			
 			prova.setId(resultSet.getInt("id_prova"));
 			prova.setQuestoes(questoes);
-			prova.setRespostas(respostas);
+			prova.setGabarito(respostas);
 			
 			conn.close();
 		} catch (SQLException e) {
@@ -59,6 +59,7 @@ public class ProvaDAO extends BaseDAO implements InterfaceProvaDAO {
 		try {
 			ResultSetMetaData metadata = resultSet.getMetaData();
 			for(int i=1; i<= metadata.getColumnCount(); i++) {
+				//TODO ta errado, precisa ignorar coluna com enunciado nulo pra não dar merda
 				if(metadata.getColumnName(i).contains("questao")) {
 					tamanhoProva++;
 				}

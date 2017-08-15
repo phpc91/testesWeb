@@ -1,13 +1,10 @@
 package entidade;
 
-/*
- * string questoes, boolean respostas
- */
 public class Prova {
 	
 	private int id;
-	private String questoes[] = new String[10];
-	private Boolean respostas[] = new Boolean[10];
+	private String questoes[];
+	private Boolean gabarito[];
 	
 	public int getId() {
 		return id;
@@ -20,13 +17,20 @@ public class Prova {
 	public String getQuestao(int i) {
 		return questoes[i];
 	}
-	
-	public Boolean[] getRespostas() {
-		return respostas;
+	/**
+	 * Retorna gabarito completo da prova
+	 * @return Boolean[] gabarito completo
+	 */
+	public Boolean[] getGabarito() {
+		return gabarito;
 	}
-	
-	public Boolean getResposta(int i) {
-		return respostas[i];
+	/**
+	 * Retorna gabarito de uma única questão
+	 * @param i indice da questao (iniciado em 0)
+	 * @return Boolean gabarito da questao i
+	 */
+	public Boolean getGabaritoDaQuestao(int i) {
+		return gabarito[i];
 	}
 	
 	public void setId(int id) {
@@ -41,11 +45,11 @@ public class Prova {
 		this.questoes[i] = questao;
 	}
 	
-	public void setRespostas(Boolean[] respostas) {
-		this.respostas = respostas;
+	public void setGabarito(Boolean[] gabarito) {
+		this.gabarito = gabarito;
 	}
 	
-	public void setResposta(Boolean resposta, int i) {
-		this.respostas[i] = resposta;
+	public void setGabaritoDaQuestao(Boolean gabarito, int i) {
+		this.gabarito[i] = gabarito;
 	}
 }

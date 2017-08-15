@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.google.gson.Gson" %>
+<%@ page import="entidade.Funcionario" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -35,22 +37,27 @@ h5{
 <title>TestesWeb</title>
 </head>
 <% Integer idProva = (Integer) request.getAttribute("id_prova"); %>
+<% Gson gson = new Gson(); %>
+<% String objFuncionario = (String)request.getAttribute("obj_funcionario"); %>
+<% Funcionario funcionario = gson.fromJson(objFuncionario, Funcionario.class); //util? necessario? exibir nome? exibir titulo treinamento?%>
 <body>
 	<h1>Prova Tipo <%= idProva %></h1>
 	<form id="questionario" action="${pageContext.request.contextPath}/correcao" method="post">
+		<input type="hidden" name="prova_id" value="<%= idProva %>"/>
+		<input type="hidden" name="obj_funcionario" value='<%= objFuncionario %>'>
 		<div id="prova" class="mdl-grid">
 			<% String[] questoes = (String[]) request.getAttribute("questoes"); %>
 			<% for(int i=0; i < questoes.length; i++) { %>
 				<div id="questoes" class="mdl-cell mdl-cell--6-col border">
 				<h5 style="margin-top:0px; margin-bottom:7px;"><strong>Questão <%= i+1 %>:</strong></h5>
 				<h6 style="margin-top:0px; margin-bottom:6px;"><%= questoes[i] %></h6></div>
-				<div id="respostas" class="mdl-cell mdl-cell--6-col border">
+				<div id="resposta" class="mdl-cell mdl-cell--6-col border">
 					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="resposta<%= i %>V" style="margin-top:15px;margin-right:10px">
-						<input type="radio" id="resposta<%= i %>V" class="mdl-radio__button" name="respostas<%= i %>" value=true>
+						<input type="radio" id="resposta<%= i %>V" class="mdl-radio__button" name="resposta<%= i %>" value=true>
 						<span class="mdl-radio__label">Verdadeiro&emsp;</span>
 					</label>
 					<label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="resposta<%= i %>F" style="margin-top:15px;">
-						<input type="radio" id="resposta<%= i %>F" class="mdl-radio__button" name="respostas<%= i %>" value=false>
+						<input type="radio" id="resposta<%= i %>F" class="mdl-radio__button" name="resposta<%= i %>" value=false>
 						<span class="mdl-radio__label">Falso</span>
 					</label>
 				</div>
